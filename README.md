@@ -72,14 +72,103 @@ Dependencias clave del `pom.xml`:
 
 ## Arquitectura del proyecto
 
-La estructura del código está organizada por responsabilidades:
+La aplicación sigue una arquitectura hexagonal (ports and adapters), separando claramente el núcleo del negocio de los mecanismos de entrada y salida.
 
-- `src/main/java/org/mitocode/aplication`: casos de uso de negocio
-- `src/main/java/org/mitocode/domain`: entidades, servicios del dominio y enums
-- `src/main/java/org/mitocode/infrastructure/input/rest`: recursos REST y DTOs
-- `src/main/java/org/mitocode/infrastructure/output/persistence/repository`: repositorios JPA/Reactive
-- `src/main/java/org/mitocode/infrastructure/mappers`: conversión de entidades a DTOs y viceversa
-- `src/main/java/org/mitocode/infrastructure/error`: manejo global de errores y excepciones
+### Capa de dominio
+
+Contiene las reglas propias del negocio y las entidades centrales:
+
+- `src/main/java/org/mitocode/domain/entities`
+- `src/main/java/org/mitocode/domain/services`
+- `src/main/java/org/mitocode/domain/enums`
+
+Aquí residen:
+
+- entidades como `Customer`, `Professional`, `AvailableSchedule` y `Reservation`
+- servicios del dominio
+- enums de estado y errores
+- validaciones y reglas de negocio que no dependen de HTTP ni de base de datos
+
+### Capa de aplicación
+
+Contiene los casos de uso o `UseCase`:
+
+- `src/main/java/org/mitocode/aplication`
+
+Estos componentes orquestan la lógica del negocio, coordinando:
+
+- consultas al dominio
+- validación de reglas
+- llamadas a repositorios
+- transformación de datos hacia los DTOs de salida
+
+Ejemplos:
+
+- `CustomerServiceUseCase`
+- `ProfessionalServiceUseCase`
+- `AvailableScheduleServiceUseCase`
+- `ReservationUseCase`
+
+### Capa de infraestructura
+
+Es la capa adaptadora hacia el exterior:
+
+- `src/main/java/org/mitocode/infrastructure/input/rest`: recursos REST y endpoints HTTP
+- `src/main/java/org/mitocode/infrastructure/input/rest/dto`: DTOs de entrada/salida
+- `src/main/java/org/mitocode/infrastructure/output/persistence/repository`: repositorios para acceso a datos
+- `src/main/java/org/mitocode/infrastructure/mappers`: conversión entre entidades y DTOs
+- `src/main/java/org/mitocode/infrastructure/error`: manejo de errores y respuestas HTTP
+
+Esta separación permite que la lógica de negocio no dependa de:
+
+- Jakarta REST
+- PostgreSQL
+- detalles de serialización JSON
+- framework de UI o infraestructura externa
+
+### Flujo hexagonal de la API
+
+El flujo típico de una petición es:
+
+1. El cliente envía una petición HTTP al `Resource`
+2. El `Resource` delega al caso de uso correspondiente
+3. El caso de uso usa servicios del dominio y repositorios mediante interfaces/puertos
+4. La infraestructura implementa esos puertos con repositorios y adaptadores externos
+5. La respuesta se transforma a DTOs y se devuelve al cliente con un formato `ApiResponse<T>`
+
+### Diagrama conceptual
+
+```text
++-----------------------------------------------------------+
+|                         Cliente                             |
+|                    HTTP / Postman / Swagger                 |
++------------------------------+----------------------------+
+                               |
+                               v
++-----------------------------------------------------------+
+|                  Infrastructure (Adapters)                 |
+|  REST Resources | DTOs | Mappers | Repositories | Errors   |
++------------------------------+----------------------------+
+                               |
+                               v
++-----------------------------------------------------------+
+|                    Application (Use Cases)                 |
+|   CustomerServiceUseCase | ProfessionalServiceUseCase      |
+|   AvailableScheduleServiceUseCase | ReservationUseCase     |
++------------------------------+----------------------------+
+                               |
+                               v
++-----------------------------------------------------------+
+|                       Domain (Core)                        |
+| Entities | Services | Enums | Business Rules | Validation  |
++-----------------------------------------------------------+
+                               |
+                               v
++-----------------------------------------------------------+
+|                    Persistence / External                  |
+|                  PostgreSQL + Flyway + JDBC               |
++-----------------------------------------------------------+
+```
 
 En términos funcionales, la app sigue una lógica tipo:
 
