@@ -1,0 +1,53 @@
+# -----------------------------------------------------------------------------
+# ETAPA 1: Builder  GraalVM Community Edition
+# Usamos la imagen oficial que incluye 'native-image' y JDK 21
+# -----------------------------------------------------------------------------
+# Quarkus 3.39.2 requires GraalVM 25.0.0+ for native-image builds.
+FROM ghcr.io/graalvm/native-image-community:25 AS build
+
+WORKDIR /app
+
+# 1. Instalamos herramientas básicas.
+#    Esta imagen también está basada en Oracle Linux (OL), así que 'microdnf' funciona igual.
+RUN microdnf install -y tar gzip wget findutils \
+    && microdnf clean all
+
+# [cite_start]2. Instalamos Maven Manualmente (Reutilizando tu script [cite: 6])
+#    Es necesario porque la imagen de GraalVM viene "pelada" (sin Maven).
+ENV MAVEN_VERSION=3.9.9
+RUN wget https://archive.apache.org/dist/maven/maven-3/${MAVEN_VERSION}/binaries/apache-maven-${MAVEN_VERSION}-bin.tar.gz \
+    && tar -xzf apache-maven-${MAVEN_VERSION}-bin.tar.gz -C /usr/share \
+    && mv /usr/share/apache-maven-${MAVEN_VERSION} /usr/share/maven \
+    && ln -s /usr/share/maven/bin/mvn /usr/bin/mvn \
+    && rm apache-maven-${MAVEN_VERSION}-bin.tar.gz
+
+# 3. Configuración de dependencias
+#    NOTA: En esta imagen somos 'root' por defecto, no existe el usuario 'quarkus'.
+COPY pom.xml .
+RUN mvn -B org.apache.maven.plugins:maven-dependency-plugin:3.1.2:go-offline
+
+# 4. Compilación Nativa
+COPY src src
+
+# AGREGADO IMPORTANTE:
+# -Dquarkus.native.container-build=false: Le dice a Quarkus "Usa el GraalVM que ya tienes instalado aquí, no busques Docker".
+RUN mvn package -Pnative -DskipTests \
+    -Dquarkus.native.container-build=false
+
+# -----------------------------------------------------------------------------
+# ETAPA 2: Runtime (Micro Image)
+# Esta etapa no cambia, el binario nativo es compatible con Linux 64-bit
+# -----------------------------------------------------------------------------
+FROM quay.io/quarkus/ubi9-quarkus-micro-image:2.0
+WORKDIR /work/
+RUN chown 1001 /work \
+    && chmod "g+rwX" /work \
+    && chown 1001:root /work
+
+COPY --chown=1001:root --chmod=0755 --from=build /app/target/*-runner /work/application
+
+EXPOSE 8080
+
+USER 1001
+
+CMD ["./application", "-Dquarkus.http.host=0.0.0.0"]

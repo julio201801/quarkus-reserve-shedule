@@ -1,0 +1,159 @@
+{
+  "info": {
+    "name": "Reserva API - Customers",
+    "_postman_id": "aa11bb22-cc33-dd44-ee55-ff6677889900",
+    "description": "Colección para probar el endpoint de actualización de clientes",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Actualizar Customer",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"firstName\": \"Maria\",\n  \"lastName\": \"Ramírez Costa\",\n  \"email\": \"maria.ramirez@example.com\",\n  \"phone\": \"+51 987654321\",\n  \"createdAt\": \"2026-09-13T08:00:00\",\n  \"active\": true\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8083/reserva/api/v1/customers/21e2d518-441e-4897-803f-53916fce5c02",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8083",
+          "path": [
+            "reserva",
+            "api",
+            "v1",
+            "customers",
+            "21e2d518-441e-4897-803f-53916fce5c02"
+          ]
+        }
+      }
+    }
+  ],
+  "item": [
+    {
+      "name": "Crear Customer",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"firstName\": \"Maria\",\n  \"lastName\": \"Ramírez Costa\",\n  \"email\": \"maria.ramirez@example.com\",\n  \"phone\": \"+51 987654321\",\n  \"createdAt\": \"2026-09-13T08:00:00\",\n  \"active\": true\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8083/reserva/api/v1/customers",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8083",
+          "path": [
+            "reserva",
+            "api",
+            "v1",
+            "customers"
+          ]
+        }
+      }
+    }
+  ],
+  "item": [
+  {
+    "name": "Buscar Customer por ID",
+    "request": {
+      "method": "GET",
+      "header": [
+        {
+          "key": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "url": {
+        "raw": "http://localhost:8083/reserva/api/v1/customers/21e2d518-441e-4897-803f-53916fce5c02",
+        "protocol": "http",
+        "host": [
+          "localhost"
+        ],
+        "port": "8083",
+        "path": [
+          "reserva",
+          "api",
+          "v1",
+          "customers",
+          "21e2d518-441e-4897-803f-53916fce5c02"
+        ]
+      }
+    }
+  }
+],
+  "item": [
+    {
+      "name": "Listar todos los Customers",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:8083/reserva/api/v1/customers",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8083",
+          "path": [
+            "reserva",
+            "api",
+            "v1",
+            "customers"
+          ]
+        }
+      }
+    }
+  ],
+  "item": [
+  {
+    "name": "Eliminar Customer por ID",
+    "request": {
+      "method": "DELETE",
+      "header": [
+        {
+          "key": "Content-Type",
+          "value": "application/json"
+        }
+      ],
+      "url": {
+        "raw": "http://localhost:8083/reserva/api/v1/customers/fa3baf79-8696-4cb2-8b9b-097913452678",
+        "protocol": "http",
+        "host": [
+          "localhost"
+        ],
+        "port": "8083",
+        "path": [
+          "reserva",
+          "api",
+          "v1",
+          "customers",
+          "fa3baf79-8696-4cb2-8b9b-097913452678"
+        ]
+      }
+    }
+  }
+]
+}

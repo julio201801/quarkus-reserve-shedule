@@ -1,0 +1,159 @@
+{
+  "info": {
+    "name": "Reserva API - Professionals",
+    "_postman_id": "12345678-abcd-efgh-ijkl-9876543210",
+    "description": "Colección para probar el endpoint de creación de profesionales",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Crear Professional",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"firstName\": \"Piter\",\n  \"lastName\": \"Parker\",\n  \"specialty\": \"Doctor\",\n  \"activeStatus\": true\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8083/reserva/api/v1/professionals",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8083",
+          "path": [
+            "reserva",
+            "api",
+            "v1",
+            "professionals"
+          ]
+        }
+      }
+    }
+  ],
+  "item": [
+    {
+      "name": "Actualizar Professional",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"firstName\": \"Juan\",\n  \"lastName\": \"Perez\",\n  \"specialty\": \"Cardiología\",\n  \"activeStatus\": true\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8083/reserva/api/v1/professionals/7b95788b-613b-475f-aecc-64fa24d49a94",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8083",
+          "path": [
+            "reserva",
+            "api",
+            "v1",
+            "professionals",
+            "7b95788b-613b-475f-aecc-64fa24d49a94"
+          ]
+        }
+      }
+    }
+  ],
+  "item": [
+    {
+      "name": "Obtener Professional por ID",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:8083/reserva/api/v1/professionals/277118d4-cefb-48bb-a414-9667cf93ffe2",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8083",
+          "path": [
+            "reserva",
+            "api",
+            "v1",
+            "professionals",
+            "277118d4-cefb-48bb-a414-9667cf93ffe2"
+          ]
+        }
+      }
+    }
+  ],
+  "item": [
+    {
+      "name": "Listar todos los Professionals",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:8083/reserva/api/v1/professionals",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8083",
+          "path": [
+            "reserva",
+            "api",
+            "v1",
+            "professionals"
+          ]
+        }
+      }
+    }
+  ],
+  "item": [
+    {
+      "name": "Eliminar Professional por ID",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:8083/reserva/api/v1/professionals/fa3baf79-8696-4cb2-8b9b-097913452678",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8083",
+          "path": [
+            "reserva",
+            "api",
+            "v1",
+            "professionals",
+            "fa3baf79-8696-4cb2-8b9b-097913452678"
+          ]
+        }
+      }
+    }
+  ]
+}

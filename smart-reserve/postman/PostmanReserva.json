@@ -1,0 +1,103 @@
+{
+  "info": {
+    "name": "Reserva API - Reservations",
+    "_postman_id": "rr11ss22-tt33-uu44-vv55-ww6677889900",
+    "description": "Colección para probar el endpoint de creación de reservas",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Crear Reservation",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"date\": \"2026-09-18\",\n  \"startTime\": \"08:00:00\",\n  \"endTime\": \"16:00:00\",\n  \"customerId\": \"4dec70c1-382b-43b7-901f-d439bc6dfc9a\",\n  \"professionalId\": \"277118d4-cefb-48bb-a414-9667cf93ffe2\",\n  \"status\": \"CREATED\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8083/reserva/api/v1/reservations",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8083",
+          "path": [
+            "reserva",
+            "api",
+            "v1",
+            "reservations"
+          ]
+        }
+      }
+    }
+  ],
+  "item": [
+    {
+      "name": "Buscar Reservations por Fecha",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"date\": \"2026-09-18\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8083/reserva/api/v1/reservations/reservations-by-date",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8083",
+          "path": [
+            "reserva",
+            "api",
+            "v1",
+            "reservations",
+            "reservations-by-date"
+          ]
+        }
+      }
+    }
+  ],
+  "item": [
+    {
+      "name": "Eliminar Reservation por ID",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:8083/reserva/api/v1/reservations/fd94cdcb-4c1b-4bb6-b935-eaa2f053b5b9",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8083",
+          "path": [
+            "reserva",
+            "api",
+            "v1",
+            "reservations",
+            "fd94cdcb-4c1b-4bb6-b935-eaa2f053b5b9"
+          ]
+        }
+      }
+    }
+  ]
+}
+

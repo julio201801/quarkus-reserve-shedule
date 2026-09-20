@@ -1,0 +1,40 @@
+{
+  "info": {
+    "name": "Reserva API - Available Schedules",
+    "_postman_id": "bb11cc22-dd33-ee44-ff55-gg6677889900",
+    "description": "Colección para probar el endpoint de creación de horarios disponibles",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Crear Available Schedule",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"professionalId\": \"277118d4-cefb-48bb-a414-9667cf93ffe2\",\n  \"date\": \"2026-09-18\",\n  \"startTime\": \"08:00:00\",\n  \"endTime\": \"16:00:00\",\n  \"active\": true\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8083/reserva/api/v1/available-schedules",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8083",
+          "path": [
+            "reserva",
+            "api",
+            "v1",
+            "available-schedules"
+          ]
+        }
+      }
+    }
+  ]
+}

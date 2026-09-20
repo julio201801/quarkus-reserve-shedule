@@ -1,0 +1,22 @@
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: postgres-mitocode-26-4
+    # Carga todas las variables definidas en el archivo .env
+    env_file:
+      - .env
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: always
+    networks:
+      - mi-red-mitocode
+
+volumes:
+  postgres_data:
+
+networks:
+  mi-red-mitocode:
+    name: mitocode-network
+    driver: bridge
